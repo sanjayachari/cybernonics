@@ -1,0 +1,11 @@
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: AhrefsSiteAudit
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://freshertoday.in/sitemap.xml
+

@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2B6CB0;
+  --color-accent: #7B61FF;
+  --color-success: #38A169;
+  --color-muted: #6B7280;
+  --color-foreground: #1A202C;
+
+  /* Breakpoints */
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1536px;
+  --screen-3xl: 1920px;
+}
+
+@layer base {
+  body {
+    color: var(--color-foreground);
+      font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  }
+
+  .container {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @screen sm {
+    .container {
+      max-width: 100%;
+    }
+  }
+
+  @screen md {
+    .container {
+      max-width: 600px;
+    }
+  }
+
+  @screen lg {
+    .container {
+      max-width: 720px;
+    }
+  }
+
+  @screen xl {
+    .container {
+      max-width: 960px;
+    }
+  }
+
+  @screen 2xl {
+    .container {
+      max-width: 1140px;
+    }
+  }
+
+  @screen 3xl {
+    .container {
+      max-width: 1320px;
+    }
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+@keyframes delayedWiggle {
+  0%, 80% {
+    transform: rotate(0deg);
+  }
+  85% {
+    transform: rotate(-10deg);
+  }
+  90% {
+    transform: rotate(10deg);
+  }
+  95% {
+    transform: rotate(-6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.delayed-wiggle-bell {
+  display: inline-block;
+  animation: delayedWiggle 2s ease-in-out infinite;
+}
