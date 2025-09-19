@@ -1,6 +1,7 @@
 "use client";
 
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -10,14 +11,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Logo & Description */}
           <div>
-            <h2 className="text-2xl font-bold text-[#005250]">Freshertoday</h2>
+            <h2 className="text-2xl font-bold text-[#005250]">
+                          <Image src="/brand_logo1.png" alt="Logo" width={180} height={50} priority />
+              
+            </h2>
             <p className="text-gray-600 mt-4 text-sm leading-relaxed">
-              Helping students and freshers find jobs, internships, and career
-              opportunities that launch their future.
+              Cybernonics delivers innovative, AI-driven healthcare solutions to transform patient care, streamline operations, and enable businesses to thrive in the digital era.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Company Links */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 uppercase mb-4">
               Company
@@ -26,7 +29,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  title="Learn more about Freshertoday"
+                  title="Learn more about Cybernonics"
                   className="hover:text-[#005250]"
                 >
                   About Us
@@ -34,17 +37,8 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/sanjay-achari"
-                  title="Meet the founder Sanjay Achari"
-                  className="hover:text-[#005250]"
-                >
-                  Founder
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/contact"
-                  title="Contact Freshertoday team"
+                  title="Contact Cybernonics team"
                   className="hover:text-[#005250]"
                 >
                   Contact
@@ -53,7 +47,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  title="Privacy Policy of Freshertoday"
+                  title="Privacy Policy of Cybernonics"
                   className="hover:text-[#005250]"
                 >
                   Privacy Policy
@@ -62,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  title="Terms of Service for using Freshertoday"
+                  title="Terms of Service for using Cybernonics"
                   className="hover:text-[#005250]"
                 >
                   Terms of Service
@@ -71,56 +65,59 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Services & Resources */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 uppercase mb-4">
-              Resources
+              Services
             </h3>
             <ul className="space-y-2 text-sm text-gray-600">
               <li>
                 <Link
-                  href="/coming-soon"
-                  title="Browse jobs for freshers"
+                  href="/consulting/ai-consulting"
+                  title="Explore our AI consulting services"
                   className="hover:text-[#005250]"
                 >
-                  Browse Jobs
+                  AI Consulting
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/internships"
-                  title="Explore internship listings"
+                  href="/consulting/cybersecurity-consulting"
+                  title="Explore cybersecurity consulting"
                   className="hover:text-[#005250]"
                 >
-                  Internships
+                  Cybersecurity Consulting
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/coming-soon"
-                  title="Get your internship certificate"
+                  href="/products"
+                  title="Discover our products"
                   className="hover:text-[#005250]"
                 >
-                  Get Certificate
+                  Products
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/learn-more"
-                  title="Why internships are important for freshers"
+                  href="/staffing-solutions"
+                  title="Explore staffing and enterprise solutions"
                   className="hover:text-[#005250]"
                 >
-                  Why Internships Matter
+                  Staffing Solutions
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Social Media */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 uppercase mb-4">
               Follow Us
             </h3>
+            <p className="text-sm text-gray-500 mb-4">
+              Stay updated with our latest insights, AI solutions, and healthcare innovations.
+            </p>
             <div className="flex gap-4">
               <Link
                 href="#"
@@ -144,7 +141,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link
-                href="/go/linkedin"
+                href="#"
                 title="Connect with us on LinkedIn"
                 className="text-gray-500 hover:text-[#005250]"
               >
@@ -154,9 +151,9 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
+        {/* Footer Bottom */}
         <div className="border-t border-gray-200 mt-12 pt-6 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} Freshertoday. All rights reserved.
+          © {new Date().getFullYear()} Cybernonics. All rights reserved. Crafted with innovation and AI-driven excellence.
         </div>
       </div>
     </footer>

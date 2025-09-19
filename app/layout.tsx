@@ -3,47 +3,46 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata = {
-  title: "freshertoday | Internships & Jobs for Freshers in India",
+  title: "Cybernonics | AI & Technology Consulting",
   description:
-    "freshertoday helps freshers in India find high-quality jobs and internships with ease. Apply directly or via trusted sources — curated, simple, and free.",
+    "Cybernonics delivers AI, automation, cloud, and cybersecurity consulting to help businesses scale with intelligent and secure technology solutions.",
   keywords:
-    "freshertoday, fresher jobs, internships India, entry-level jobs, college internships, job board, student careers",
-  authors: [{ name: "freshertoday" }],
+    "Cybernonics, AI consulting, cybersecurity consulting, enterprise automation, cloud solutions, data consulting, technology strategy",
+  authors: [{ name: "Cybernonics" }],
   robots: "index, follow",
   openGraph: {
-    title: "freshertoday | Internships & Jobs for Freshers in India",
-    siteName: "freshertoday",
+    title: "Cybernonics | AI & Technology Consulting",
+    siteName: "Cybernonics",
     description:
-      "Find your first job or internship with freshertoday. Curated listings, direct apply options, and zero clutter.",
-    url: "https://freshertoday.in",
-
-
+      "Future-ready consulting in AI, cybersecurity, cloud, and enterprise automation. Cybernonics helps businesses build intelligent and secure solutions.",
+    url: "https://cybernonics.in",
     type: "website",
     images: [
       {
-        url: "https://freshertoday.in/logo.png",
+        url: "https://cybernonics.in/logo.png",
         width: 1200,
         height: 630,
-        alt: "freshertoday Job Board",
+        alt: "Cybernonics Consulting",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@freshertoday",
-    title: "freshertoday | Internships & Jobs for Freshers in India",
+    site: "@Cybernonics",
+    title: "Cybernonics | AI & Technology Consulting",
     description:
-      "Browse quality internships and fresher jobs. Built for Indian students and early professionals.",
-    images: ["https://freshertoday.in/logo.png"],
+      "Cybernonics provides AI, cybersecurity, cloud, and enterprise automation consulting for scalable, secure, and intelligent growth.",
+    images: ["https://cybernonics.in/logo.png"],
   },
   alternates: {
-    canonical: "https://freshertoday.in",
+    canonical: "https://cybernonics.in",
     languages: {
-      "en-IN": "https://freshertoday.in",
-      "x-default": "https://freshertoday.in",
+      "en-IN": "https://cybernonics.in",
+      "x-default": "https://cybernonics.in",
     },
   },
 };
+
 
 export const viewport = {
   width: "device-width",

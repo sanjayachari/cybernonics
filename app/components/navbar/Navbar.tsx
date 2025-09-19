@@ -1,157 +1,224 @@
 "use client";
-
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
+import React, { useEffect, useState, useRef, JSX } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
+import {
+  FaChevronDown,
+  FaRobot,
+  FaShieldAlt,
+  FaCloud,
+  FaLaptopCode,
+  FaMobileAlt,
+  FaPaintBrush,
+  FaGraduationCap,
+  FaUsers,
+} from "react-icons/fa";
+import Link from "next/link";
 
-export default function Navbar() {
-  const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+interface NavLink {
+  name: string;
+  icon: JSX.Element;
+  url: string;
+}
 
-  const navLinks = [
-    {
-      name: "Blogs",
-      href: "/blogs",
-      title: "Read latest career blogs on Freshertoday",
-    },
-    { name: "Internships", href: "/internships", title: "Internships" },
-    { name: "For Companies", href: "/coming-soon", title: "Coming soon" },
-    {
-      name: "Login",
-      href: "/login",
-      title: "Login to your Freshertoday account",
-    },
-  ];
+interface NavItem {
+  name: string;
+  links: NavLink[];
+}
+
+const navItems: NavItem[] = [
+  {
+    name: "CONSULTING",
+    links: [
+      { name: "AI Consulting", icon: <FaRobot />, url: "/consulting/ai-consulting" },
+      { name: "Cybersecurity Consulting", icon: <FaShieldAlt />, url: "/consulting/cybersecurity-consulting" },
+      { name: "AWS Consulting", icon: <FaCloud />, url: "/consulting/aws-consulting" },
+      { name: "VMware Consulting", icon: <FaCloud />, url: "/consulting/vmware-consulting" },
+      { name: "Website Development", icon: <FaLaptopCode />, url: "/consulting/website-development" },
+      { name: "App Development", icon: <FaMobileAlt />, url: "/consulting/app-development" },
+      { name: "Digital Media", icon: <FaPaintBrush />, url: "/consulting/digital-media" },
+      { name: "Consulting", icon: <FaLaptopCode />, url: "/consulting/general" },
+      { name: "Training and Certifications", icon: <FaGraduationCap />, url: "/consulting/training-certifications" },
+    ],
+  },
+  {
+    name: "ADVISORY",
+    links: [
+      { name: "Strategic Advisory", icon: <FaUsers />, url: "/advisory/strategic-advisory" },
+      { name: "Technology Advisory", icon: <FaLaptopCode />, url: "/advisory/technology-advisory" },
+      { name: "Digital Transformation", icon: <FaCloud />, url: "/advisory/digital-transformation" },
+      { name: "Risk Management", icon: <FaShieldAlt />, url: "/advisory/risk-management" },
+      { name: "Compliance Advisory", icon: <FaGraduationCap />, url: "/advisory/compliance-advisory" },
+    ],
+  },
+  {
+    name: "PRODUCTS",
+    links: [
+      { name: "Software Solution", icon: <FaLaptopCode />, url: "/products/software-solution" },
+      { name: "Security Tool", icon: <FaShieldAlt />, url: "/products/security-tool" },
+      { name: "Cloud Platform", icon: <FaCloud />, url: "/products/cloud-platform" },
+      { name: "Mobile Application", icon: <FaMobileAlt />, url: "/products/mobile-application" },
+      { name: "Enterprise Solutions", icon: <FaUsers />, url: "/products/enterprise-solutions" },
+    ],
+  },
+  {
+    name: "STAFFING",
+    links: [
+      { name: "IT Staffing", icon: <FaUsers />, url: "/staffing/it-staffing" },
+      { name: "Contract Staffing", icon: <FaUsers />, url: "/staffing/contract-staffing" },
+      { name: "Permanent Placement", icon: <FaUsers />, url: "/staffing/permanent-placement" },
+      { name: "Project Teams", icon: <FaUsers />, url: "/staffing/project-teams" },
+      { name: "Talent Acquisition", icon: <FaUsers />, url: "/staffing/talent-acquisition" },
+    ],
+  },
+];
+
+const Navbar: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Scroll shadow
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleMouseEnter = (idx: number) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpenDropdown(idx);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setOpenDropdown(null), 500);
+  };
 
   return (
-    <>
-      {/* 📢 Announcement (Hidden on /internships) */}
-      {pathname !== "/internships" && (
-        <div className="w-full bg-[#fef9c3] text-[#1f2937] text-sm sm:text-base text-center py-2 px-4 border-b border-yellow-300 font-medium flex justify-center items-center gap-2">
-          <span className="delayed-wiggle-bell text-red-500 font-bold text-lg">
-            🔔
-          </span>
-          <span>We&#39;re hiring interns!</span>
-          <Link
-            href="/internships"
-            title="Apply for internships now"
-            className="ml-2 text-yellow-900 font-bold underline underline-offset-4 hover:text-yellow-700 transition-colors"
-          >
-            Apply now →
-          </Link>
-        </div>
-      )}
-
-      {/* Navbar */}
-      <nav className="sticky top-0 z-20 bg-white border-b border-gray-200 px-4 sm:px-8 py-4 shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            title="Go to Freshertoday homepage"
-            className="flex items-center gap-2 text-2xl font-semibold text-[#27508d] cursor-pointer"
-          >
-            <div className="relative w-8 h-8">
-              <Image
-                src="/logo.png"
-                alt="Freshertoday Logo"
-                title="Freshertoday Logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-            freshertoday
+    <nav
+      ref={navRef}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled ? "py-3 shadow-md bg-white" : "py-6"
+      } bg-white`}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-12">
+        <div className="flex items-center gap-6 md:gap-12">
+          <Link href="/" className="flex-shrink-0">
+            <Image src="/brand_logo1.png" alt="Logo" width={180} height={50} priority />
           </Link>
 
-          {/* Desktop links */}
-          <div className="hidden sm:flex items-center gap-6 text-sm sm:text-base">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                title={link.title}
-                className="text-gray-700 hover:text-[#005250] transition"
+          <div className="hidden md:block w-px h-10 bg-gradient-to-b from-gray-200 via-gray-400 to-gray-200"></div>
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex gap-8 text-gray-700 font-medium relative">
+            {navItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="relative"
+                onMouseEnter={() => handleMouseEnter(idx)}
+                onMouseLeave={handleMouseLeave}
               >
-                {link.name}
-              </Link>
+                {/* Dropdown trigger */}
+                <div className="flex items-center gap-1 hover:text-blue-600 transition-colors duration-300 font-semibold cursor-pointer">
+                  {item.name} <FaChevronDown size={12} />
+                </div>
+
+                <ul
+                  className={`
+                    absolute top-full left-0 mt-2 min-w-[220px] bg-white rounded-xl shadow-xl overflow-hidden
+                    transition-all duration-300 transform origin-top z-50
+                    ${openDropdown === idx ? "opacity-100 scale-100 translate-y-0" : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}
+                  `}
+                >
+                  {item.links.map((link, i) => (
+                    <li key={i}>
+                      <Link
+                        href={link.url}
+                        className="flex items-center gap-2 px-5 py-4 text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 whitespace-nowrap border-b border-black border-opacity-10 last:border-b-0"
+                      >
+                        {link.icon} <span>{link.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-
-            <Link
-              href="/register"
-              title="Sign up on Freshertoday"
-              className="text-white bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 px-5 py-1.5 rounded-full hover:opacity-90"
-            >
-              Signup
-            </Link>
           </div>
-
-          {/* Hamburger */}
-          <button
-            className="sm:hidden text-gray-700"
-            onClick={() => setIsOpen(true)}
-            aria-label="Open menu"
-          >
-            <Menu className="w-6 h-6" />
-          </button>
-        </div>
-      </nav>
-
-      {/* Overlay + Slide-in Sidebar */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/40 transition-opacity duration-300 ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={() => setIsOpen(false)}
-      />
-
-      <div
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-white shadow-2xl transition-transform duration-300 transform ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
-          <div className="text-xl font-bold text-[#27508d] flex gap-2">
-            <Image
-              src="/logo.png"
-              alt="Freshertoday Logo"
-              width={30}
-              height={30}
-              title="Freshertoday Logo"
-              className="object-contain"
-              priority
-            />
-            freshertoday
-          </div>
-          <button onClick={() => setIsOpen(false)} aria-label="Close menu">
-            <X className="w-6 h-6 text-gray-700" />
-          </button>
         </div>
 
-        <div className="flex flex-col gap-4 p-4 text-gray-700 text-base">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              title={link.title}
-              onClick={() => setIsOpen(false)}
-              className="text-left hover:text-[#005250] transition"
-            >
-              {link.name}
-            </Link>
-          ))}
+        {/* CTA + Hamburger */}
+        <div className="flex items-center gap-4">
           <Link
-            href="/coming-soon"
-            title="Signup for Freshertoday"
-            onClick={() => setIsOpen(false)}
-            className="underline rounded-full hover:opacity-90"
+            href="/schedule-call"
+            className="hidden md:inline px-6 py-2.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg"
           >
-            Signup
+            SCHEDULE A CALL
           </Link>
+
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden text-3xl text-gray-800"
+          >
+            {mobileOpen ? <FiX /> : <FiMenu />}
+          </button>
         </div>
       </div>
-    </>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden bg-white shadow-md mt-2 rounded-b-4xl">
+          <div className="max-w-7xl mx-auto px-6 py-4 space-y-4 text-gray-700 font-medium">
+            {navItems.map((item, idx) => (
+              <div key={idx} className="space-y-1">
+                {/* Mobile dropdown toggle */}
+                <div
+                  onClick={() =>
+                    setOpenDropdown(openDropdown === idx ? null : idx)
+                  }
+                  className="w-full text-left flex justify-between items-center px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                >
+                  {item.name} <FaChevronDown size={12} />
+                </div>
+                {openDropdown === idx && (
+                  <ul className="bg-gray-50">
+                    {item.links.map((link, i) => (
+                      <li key={i}>
+                        <Link
+                          href={link.url}
+                          className="flex items-center gap-2 px-5 py-3 text-gray-700 hover:bg-blue-100 border-b border-black border-opacity-10 last:border-b-0"
+                        >
+                          {link.icon} <span>{link.name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+            <Link
+              href="/schedule-call"
+              className="w-full px-6 py-2.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg block text-center"
+            >
+              SCHEDULE A CALL
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
   );
-}
+};
+
+export default Navbar;
